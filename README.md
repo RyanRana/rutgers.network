@@ -2,7 +2,7 @@
 
 Static site for `rutgers.network` with:
 
-- Main page: `code.html`
+- Main page: `index.html`
 - Application page: `apply.html`
 
 ## Deploy (Vercel)
@@ -13,7 +13,7 @@ Static site for `rutgers.network` with:
 
 `vercel.json` is included so:
 
-- `/` serves `code.html`
+- `/` serves `index.html`
 - `/apply` serves `apply.html`
 
 ## Analytics + Performance
