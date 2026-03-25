@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Application — Rutgers.Network</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline": "#919191",
+              "on-surface": "#e2e2e2",
+              "secondary": "#c6c6cb",
+              "surface-container-low": "#1b1b1b",
+              "surface": "#131313",
+              "outline-variant": "#474747",
+              "surface-container-high": "#2a2a2a",
+              "surface-container": "#1f1f1f",
+              "surface-container-highest": "#353535",
+              "surface-bright": "#393939",
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+        .apply-blobs {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .apply-blob {
+            position: absolute;
+            filter: blur(88px);
+            will-change: transform;
+        }
+        /* Organic “cool” silhouettes — not plain circles */
+        .apply-blob--a {
+            border-radius: 58% 42% 62% 38% / 48% 55% 45% 52%;
+            background: radial-gradient(ellipse 80% 70% at 40% 35%, #ff3d5c 0%, #cc0033 45%, #6b0018 100%);
+            opacity: 0.32;
+            animation: apply-drift-a 28s ease-in-out infinite;
+        }
+        .apply-blob--b {
+            border-radius: 42% 58% 48% 52% / 58% 42% 55% 45%;
+            background: linear-gradient(135deg, #8b1538 0%, #cc0033 40%, #3d000c 100%);
+            opacity: 0.28;
+            animation: apply-drift-b 34s ease-in-out infinite;
+        }
+        .apply-blob--c {
+            border-radius: 52% 48% 55% 45% / 44% 56% 48% 52%;
+            background: radial-gradient(circle at 65% 30%, #ff6b8a 0%, #b01030 50%, #2a0006 100%);
+            opacity: 0.26;
+            animation: apply-drift-c 31s ease-in-out infinite;
+        }
+        .apply-blob--d {
+            border-radius: 45% 55% 52% 48% / 52% 48% 50% 50%;
+            background: conic-gradient(from 200deg at 50% 50%, #5c0014, #cc0033, #ff4d6d, #5c0014);
+            opacity: 0.24;
+            animation: apply-drift-d 38s ease-in-out infinite;
+        }
+        .apply-blob--e {
+            border-radius: 63% 37% 48% 52% / 42% 58% 44% 56%;
+            background: linear-gradient(210deg, #1a0004 0%, #990026 45%, #ff2d55 100%);
+            opacity: 0.22;
+            animation: apply-drift-e 42s ease-in-out infinite;
+        }
+        @keyframes apply-drift-a {
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            25% { transform: translate(6vw, -4vh) rotate(12deg) scale(1.08); }
+            50% { transform: translate(-3vw, 5vh) rotate(-8deg) scale(0.95); }
+            75% { transform: translate(4vw, 3vh) rotate(6deg) scale(1.03); }
+        }
+        @keyframes apply-drift-b {
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            33% { transform: translate(-5vw, 6vh) rotate(-14deg) scale(1.06); }
+            66% { transform: translate(7vw, -3vh) rotate(10deg) scale(0.92); }
+        }
+        @keyframes apply-drift-c {
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            20% { transform: translate(-4vw, -5vh) rotate(9deg) scale(1.04); }
+            55% { transform: translate(5vw, 4vh) rotate(-11deg) scale(0.97); }
+            80% { transform: translate(-2vw, 2vh) rotate(5deg) scale(1.02); }
+        }
+        @keyframes apply-drift-d {
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            40% { transform: translate(4vw, 7vh) rotate(15deg) scale(1.1); }
+            70% { transform: translate(-6vw, -2vh) rotate(-12deg) scale(0.9); }
+        }
+        @keyframes apply-drift-e {
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            30% { transform: translate(3vw, -6vh) rotate(-9deg) scale(1.07); }
+            60% { transform: translate(-4vw, 4vh) rotate(11deg) scale(0.94); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .apply-blob--a, .apply-blob--b, .apply-blob--c, .apply-blob--d, .apply-blob--e {
+                animation: none;
+            }
+        }
+        .grid-bg {
+            background-image: radial-gradient(circle at 1px 1px, #474747 1px, transparent 0);
+            background-size: 40px 40px;
+            opacity: 0.12;
+        }
+        .form-tag {
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+        }
+        .form-tag input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .form-tag span {
+            display: inline-block;
+            border: 1px solid rgba(71, 71, 71, 0.6);
+            border-radius: 9999px;
+            padding: 0.35rem 0.85rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #919191;
+            transition: border-color 0.15s, color 0.15s, background 0.15s;
+        }
+        .form-tag input:checked + span {
+            border-color: rgba(204, 0, 51, 0.55);
+            color: #fff;
+            background: rgba(204, 0, 51, 0.15);
+        }
+        .form-tag:hover span {
+            border-color: rgba(255, 255, 255, 0.25);
+            color: #e2e2e2;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface min-h-screen selection:bg-white/20 selection:text-white relative">
+<div class="apply-blobs" aria-hidden="true">
+<div class="apply-blob apply-blob--a w-[min(92vw,560px)] h-[min(85vw,500px)] -top-[14%] -left-[10%]" style="animation-delay:-4s"></div>
+<div class="apply-blob apply-blob--b w-[min(72vw,440px)] h-[min(78vw,460px)] top-[32%] -right-[12%]" style="animation-delay:-12s"></div>
+<div class="apply-blob apply-blob--c w-[min(58vw,400px)] h-[min(62vw,420px)] bottom-[2%] left-[15%]" style="animation-delay:-8s"></div>
+<div class="apply-blob apply-blob--d w-[min(48vw,340px)] h-[min(52vw,360px)] bottom-[22%] right-[5%]" style="animation-delay:-18s"></div>
+<div class="apply-blob apply-blob--e w-[min(64vw,420px)] h-[min(58vw,380px)] top-[52%] left-[42%]" style="animation-delay:-22s"></div>
+</div>
+<div class="fixed inset-0 grid-bg pointer-events-none z-[1]"></div>
+<div class="fixed inset-0 bg-gradient-to-b from-surface via-transparent to-[#0a0505] pointer-events-none z-[1]"></div>
+
+<nav class="relative z-20 border-b border-outline-variant/15 bg-[#131313]/70 backdrop-blur-xl">
+<div class="flex justify-between items-center px-6 md:px-8 py-4 max-w-7xl mx-auto">
+<a class="text-xl font-bold tracking-tighter text-white uppercase font-headline" href="code.html">rutgers.network</a>
+<a class="text-sm text-[#919191] hover:text-white transition-colors font-headline" href="code.html">← Back to site</a>
+</div>
+</nav>
+
+<main class="relative z-10 px-6 md:px-8 py-16 md:py-24 pb-32">
+<div class="max-w-2xl mx-auto">
+<p class="text-xs font-label uppercase tracking-[0.2rem] text-outline mb-3">Apply</p>
+<h1 class="text-3xl md:text-4xl font-headline font-bold text-white tracking-tight mb-3">Join the network</h1>
+<p class="text-secondary text-sm mb-10 leading-relaxed">Tell us what you’re building. Fields marked * are required.</p>
+
+<form class="space-y-8 rounded-DEFAULT border border-outline-variant/20 bg-surface-container-low/80 backdrop-blur-sm p-8 md:p-10" id="apply-founder" method="post" action="#">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-xs text-outline mb-2" for="ap-name">Name *</label>
+<input class="w-full bg-surface-container text-on-surface border border-outline-variant/30 rounded-DEFAULT px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#cc0033]/40" id="ap-name" name="name" required="" type="text"/>
+</div>
+<div>
+<label class="block text-xs text-outline mb-2" for="ap-email">Preferred Email *</label>
+<input class="w-full bg-surface-container text-on-surface border border-outline-variant/30 rounded-DEFAULT px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#cc0033]/40" id="ap-email" name="email" required="" type="email"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+<div>
+<label class="block text-xs text-outline mb-2" for="ap-year">Year</label>
+<input class="w-full bg-surface-container text-on-surface border border-outline-variant/30 rounded-DEFAULT px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#cc0033]/40" id="ap-year" name="year" placeholder="e.g. 2027, 1st year" type="text"/>
+</div>
+<div>
+<label class="block text-xs text-outline mb-2" for="ap-major">Major *</label>
+<input class="w-full bg-surface-container text-on-surface border border-outline-variant/30 rounded-DEFAULT px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#cc0033]/40" id="ap-major" name="major" required="" type="text"/>
+</div>
+</div>
+<div>
+<p class="text-xs text-outline mb-3">Roles <span class="text-outline/60">(select all that apply)</span></p>
+<div class="flex flex-wrap gap-2">
+<label class="form-tag"><input name="roles[]" type="checkbox" value="SWE"/><span>SWE</span></label>
+<label class="form-tag"><input name="roles[]" type="checkbox" value="Founder"/><span>Founder</span></label>
+<label class="form-tag"><input name="roles[]" type="checkbox" value="VC"/><span>VC</span></label>
+<label class="form-tag"><input name="roles[]" type="checkbox" value="Quant"/><span>Quant</span></label>
+<label class="form-tag"><input name="roles[]" type="checkbox" value="Designer"/><span>Designer</span></label>
+<label class="form-tag"><input name="roles[]" type="checkbox" value="PM"/><span>PM</span></label>
+<label class="form-tag"><input name="roles[]" type="checkbox" value="Researcher"/><span>Researcher</span></label>
+<label class="form-tag"><input name="roles[]" type="checkbox" value="Operator"/><span>Operator</span></label>
+<label class="form-tag"><input name="roles[]" type="checkbox" value="Student"/><span>Student</span></label>
+</div>
+</div>
+<div>
+<p class="text-xs text-outline mb-3">Domains <span class="text-outline/60">(select all that apply)</span></p>
+<div class="flex flex-wrap gap-2">
+<label class="form-tag"><input name="domains[]" type="checkbox" value="AI"/><span>AI</span></label>
+<label class="form-tag"><input name="domains[]" type="checkbox" value="Healthcare"/><span>Healthcare</span></label>
+<label class="form-tag"><input name="domains[]" type="checkbox" value="Energy"/><span>Energy</span></label>
+<label class="form-tag"><input name="domains[]" type="checkbox" value="Climate"/><span>Climate</span></label>
+<label class="form-tag"><input name="domains[]" type="checkbox" value="Fintech"/><span>Fintech</span></label>
+<label class="form-tag"><input name="domains[]" type="checkbox" value="Consumer"/><span>Consumer</span></label>
+<label class="form-tag"><input name="domains[]" type="checkbox" value="Enterprise"/><span>Enterprise</span></label>
+<label class="form-tag"><input name="domains[]" type="checkbox" value="Robotics"/><span>Robotics</span></label>
+<label class="form-tag"><input name="domains[]" type="checkbox" value="Biotech"/><span>Biotech</span></label>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-baseline mb-2 gap-2">
+<label class="text-xs text-outline" for="ap-building">What are you building? *</label>
+<span class="text-[10px] text-outline/70 font-mono shrink-0" data-word-counter="" data-for="ap-building" data-max="250">0 / 250 words</span>
+</div>
+<textarea class="w-full bg-surface-container text-on-surface border border-outline-variant/30 rounded-DEFAULT px-4 py-3 text-sm min-h-32 focus:outline-none focus:ring-2 focus:ring-[#cc0033]/40" data-max-words="250" id="ap-building" name="building" required=""></textarea>
+</div>
+<div>
+<div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-1 mb-2">
+<label class="text-xs text-outline" for="ap-impressive">What's something impressive you've built, shipped, researched, or accomplished. *</label>
+<span class="text-[10px] text-outline/70 font-mono shrink-0" data-word-counter="" data-for="ap-impressive" data-max="100">0 / 100 words</span>
+</div>
+<textarea class="w-full bg-surface-container text-on-surface border border-outline-variant/30 rounded-DEFAULT px-4 py-3 text-sm min-h-28 focus:outline-none focus:ring-2 focus:ring-[#cc0033]/40" data-max-words="100" id="ap-impressive" name="impressive" required=""></textarea>
+</div>
+<div>
+<label class="block text-xs text-outline mb-2" for="ap-referral">Who referred you?</label>
+<input class="w-full bg-surface-container text-on-surface border border-outline-variant/30 rounded-DEFAULT px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#cc0033]/40" id="ap-referral" name="referral" placeholder="Name or how you heard about us" type="text"/>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div>
+<label class="block text-xs text-outline mb-2" for="ap-website">Website</label>
+<input class="w-full bg-surface-container text-on-surface border border-outline-variant/30 rounded-DEFAULT px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#cc0033]/40" id="ap-website" name="website" placeholder="https://your-site.com" type="url"/>
+</div>
+<div>
+<label class="block text-xs text-outline mb-2" for="ap-linkedin">LinkedIn</label>
+<input class="w-full bg-surface-container text-on-surface border border-outline-variant/30 rounded-DEFAULT px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#cc0033]/40" id="ap-linkedin" name="linkedin" placeholder="https://linkedin.com/in/..." type="url"/>
+</div>
+<div>
+<label class="block text-xs text-outline mb-2" for="ap-github">GitHub</label>
+<input class="w-full bg-surface-container text-on-surface border border-outline-variant/30 rounded-DEFAULT px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#cc0033]/40" id="ap-github" name="github" placeholder="https://github.com/..." type="url"/>
+</div>
+</div>
+<div>
+<label class="block text-xs text-outline mb-2" for="ap-file">Additional context upload (resume, portfolio, one-pager)</label>
+<p class="text-[10px] text-outline/60 mb-2">PDF, PNG, JPG — max 10 MB</p>
+<label class="flex flex-col items-center justify-center gap-2 w-full min-h-32 border border-dashed border-outline-variant/40 rounded-DEFAULT bg-surface-container/50 cursor-pointer hover:border-[#cc0033]/35 transition-colors px-4 py-6" for="ap-file">
+<span class="material-symbols-outlined text-outline text-3xl">cloud_upload</span>
+<span class="text-xs text-outline text-center">Choose a file</span>
+<input accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg" class="sr-only" id="ap-file" name="attachment" type="file"/>
+</label>
+<p class="text-[10px] text-outline/50 mt-2" data-file-label="" id="ap-file-display">No file selected</p>
+</div>
+<button class="w-full bg-white text-surface px-6 py-3.5 text-sm font-bold rounded-DEFAULT hover:bg-[#f0f0f0] transition-all duration-200 active:scale-[0.99] shadow-[0_0_40px_rgba(204,0,51,0.12)]" type="submit">Submit application</button>
+<p class="text-xs text-outline hidden" id="ap-submit-status" role="status"></p>
+</form>
+</div>
+</main>
+
+<footer class="relative z-10 border-t border-outline-variant/15 bg-[#131313]/80 backdrop-blur-md py-10 px-8">
+<div class="max-w-2xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-widest text-outline font-label">
+<span>Rutgers.Network</span>
+<a class="hover:text-white transition-colors" href="code.html">Home</a>
+</div>
+</footer>
+
+<script>
+(function () {
+  var SUPABASE_URL = "https://zcqpgulamiwoqgwnyozq.supabase.co";
+  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpjcXBndWxhbWl3b3Fnd255b3pxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0MzE2OTMsImV4cCI6MjA5MDAwNzY5M30.A3zNNl38613t3XLZpdjoTFjYgj__E3J4q_lktXCNH2I";
+  var ATTACHMENTS_BUCKET = "application-attachments";
+  var supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  function countWords(s) {
+    var t = (s || "").trim();
+    if (!t) return 0;
+    return t.split(/\s+/).length;
+  }
+
+  function sanitizeFileName(name) {
+    return String(name || "upload")
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9._-]+/g, "-")
+      .replace(/-+/g, "-");
+  }
+
+  function checkedValues(name) {
+    return Array.prototype.slice
+      .call(document.querySelectorAll('input[name="' + name + '"]:checked'))
+      .map(function (el) {
+        return el.value;
+      });
+  }
+
+  document.querySelectorAll("[data-max-words]").forEach(function (ta) {
+    var max = parseInt(ta.getAttribute("data-max-words"), 10);
+    var counter = document.querySelector('[data-word-counter][data-for="' + ta.id + '"]');
+    function update() {
+      var n = countWords(ta.value);
+      if (counter) counter.textContent = n + " / " + max + " words";
+      ta.setCustomValidity(n > max ? "Maximum " + max + " words." : "");
+    }
+    ta.addEventListener("input", update);
+    update();
+  });
+  var fileInput = document.getElementById("ap-file");
+  var fileLabel = document.getElementById("ap-file-display");
+  var form = document.getElementById("apply-founder");
+  var submitStatus = document.getElementById("ap-submit-status");
+  var submitButton = form ? form.querySelector('button[type="submit"]') : null;
+
+  if (fileInput && fileLabel) {
+    fileInput.addEventListener("change", function () {
+      fileLabel.textContent =
+        fileInput.files && fileInput.files[0] ? fileInput.files[0].name : "No file selected";
+    });
+  }
+
+  function setSubmitting(isSubmitting) {
+    if (!submitButton) return;
+    submitButton.disabled = isSubmitting;
+    submitButton.classList.toggle("opacity-70", isSubmitting);
+    submitButton.classList.toggle("cursor-not-allowed", isSubmitting);
+    submitButton.textContent = isSubmitting ? "Submitting..." : "Submit application";
+  }
+
+  if (!form || !submitStatus || !submitButton) return;
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    submitStatus.className = "text-xs text-outline";
+    submitStatus.textContent = "";
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    var file = fileInput && fileInput.files ? fileInput.files[0] : null;
+    var attachmentPath = null;
+    var attachmentName = file ? file.name : null;
+    var attachmentType = file ? file.type : null;
+    var attachmentSize = file ? file.size : null;
+
+    // 10MB client-side guard to match UI copy.
+    if (file && file.size > 10 * 1024 * 1024) {
+      submitStatus.className = "text-xs text-[#ff9b9b]";
+      submitStatus.textContent = "File must be 10MB or smaller.";
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      var appId = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now());
+
+      if (file) {
+        var storagePath =
+          "applications/" + appId + "/" + Date.now() + "-" + sanitizeFileName(file.name);
+        var uploadResult = await supabase.storage.from(ATTACHMENTS_BUCKET).upload(storagePath, file, {
+          upsert: false,
+          contentType: file.type || "application/octet-stream"
+        });
+        if (!uploadResult.error) {
+          attachmentPath = storagePath;
+        } else {
+          throw new Error("Attachment upload failed: " + uploadResult.error.message);
+        }
+      }
+
+      var payload = {
+        id: appId,
+        name: document.getElementById("ap-name").value.trim(),
+        email: document.getElementById("ap-email").value.trim(),
+        year: document.getElementById("ap-year").value.trim() || null,
+        major: document.getElementById("ap-major").value.trim(),
+        roles: checkedValues("roles[]"),
+        domains: checkedValues("domains[]"),
+        building: document.getElementById("ap-building").value.trim(),
+        impressive: document.getElementById("ap-impressive").value.trim(),
+        referral: document.getElementById("ap-referral").value.trim() || null,
+        website: document.getElementById("ap-website").value.trim() || null,
+        linkedin: document.getElementById("ap-linkedin").value.trim() || null,
+        github: document.getElementById("ap-github").value.trim() || null,
+        attachment_name: attachmentName,
+        attachment_path: attachmentPath,
+        attachment_type: attachmentType,
+        attachment_size: attachmentSize
+      };
+
+      var insert = await supabase.from("applications").insert(payload);
+      if (insert.error) throw insert.error;
+
+      form.reset();
+      fileLabel.textContent = "No file selected";
+      document.querySelectorAll("[data-max-words]").forEach(function (ta) {
+        ta.dispatchEvent(new Event("input"));
+      });
+      submitStatus.className = "text-xs text-[#b9ffcf]";
+      submitStatus.textContent = "Application submitted successfully.";
+    } catch (err) {
+      console.error(err);
+      submitStatus.className = "text-xs text-[#ff9b9b]";
+      submitStatus.textContent =
+        err && err.message ? err.message : "Could not submit application. Please try again.";
+    } finally {
+      setSubmitting(false);
+    }
+  });
+})();
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+</body>
+</html>

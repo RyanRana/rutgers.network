@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary-container": "#000000",
+              "on-primary-fixed": "#ffffff",
+              "outline": "#919191",
+              "on-background": "#e2e2e2",
+              "surface-dim": "#131313",
+              "primary-fixed": "#5d5e60",
+              "on-surface": "#e2e2e2",
+              "secondary": "#c6c6cb",
+              "on-primary": "#1a1c1d",
+              "surface-variant": "#353535",
+              "surface-bright": "#393939",
+              "primary-fixed-dim": "#454749",
+              "surface-container-low": "#1b1b1b",
+              "on-secondary-fixed-variant": "#3a3b3f",
+              "primary": "#ffffff",
+              "tertiary-fixed": "#5e5e60",
+              "secondary-fixed-dim": "#ababb0",
+              "secondary-fixed": "#c6c6cb",
+              "surface-container-lowest": "#0e0e0e",
+              "primary-container": "#d4d4d6",
+              "on-secondary": "#1a1b1f",
+              "background": "#131313",
+              "inverse-on-surface": "#303030",
+              "on-error-container": "#ffdad6",
+              "on-tertiary-fixed": "#ffffff",
+              "on-error": "#690005",
+              "on-surface-variant": "#c6c6c6",
+              "tertiary-container": "#919092",
+              "inverse-primary": "#5d5e60",
+              "surface": "#131313",
+              "on-tertiary-container": "#000000",
+              "tertiary": "#e4e2e4",
+              "secondary-container": "#46464b",
+              "on-secondary-container": "#e3e2e7",
+              "inverse-surface": "#e2e2e2",
+              "on-tertiary": "#1b1b1d",
+              "outline-variant": "#474747",
+              "surface-tint": "#c6c6c8",
+              "on-secondary-fixed": "#1a1b1f",
+              "surface-container-high": "#2a2a2a",
+              "surface-container": "#1f1f1f",
+              "error": "#ffb4ab",
+              "tertiary-fixed-dim": "#464648",
+              "surface-container-highest": "#353535",
+              "error-container": "#93000a",
+              "on-primary-fixed-variant": "#e2e2e4",
+              "on-tertiary-fixed-variant": "#e4e2e4"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(19, 19, 19, 0.6);
+            backdrop-filter: blur(20px);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .grid-bg {
+            background-image: radial-gradient(circle at 1px 1px, #474747 1px, transparent 0);
+            background-size: 40px 40px;
+            opacity: 0.15;
+        }
+        .hero-gradient-bg {
+            filter: blur(100px);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .hero-gradient-bg .gradient-mask {
+            border-radius: 99999px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            min-width: 1000px;
+            height: 100vh;
+            transform: translate(-50%, -50%) scale(0.7);
+            overflow: hidden;
+        }
+        .hero-gradient-bg .spinning-gradient {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            height: 100vw;
+            transform: translate(-50%, -50%);
+            animation: spin 8s linear infinite;
+            background: conic-gradient(
+                from 0deg,
+                #cc0033,
+                #8b0000,
+                #e0115f,
+                #ff4d6d,
+                #5a0000,
+                #cc0033
+            );
+        }
+        .logo-belt-viewport {
+            overflow: hidden;
+            width: 100%;
+        }
+        .logo-belt-track {
+            display: flex;
+            align-items: center;
+            gap: clamp(4.75rem, 12vw, 8.5rem);
+            width: max-content;
+            animation: logoBelt 20s linear infinite;
+        }
+        .logo-belt-item {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-belt-item img {
+            height: 3.5rem;
+            width: auto;
+            max-width: min(16rem, 42vw);
+            object-fit: contain;
+            object-position: center;
+        }
+        .start-row {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 0;
+            width: 100%;
+        }
+        .start-row img {
+            width: 100%;
+            height: clamp(8rem, 20vw, 14rem);
+            object-fit: cover;
+            filter: grayscale(1) brightness(1.1) contrast(0.95);
+            opacity: 0.92;
+            display: block;
+            transition: filter 220ms ease, opacity 220ms ease;
+        }
+        .start-row img:hover {
+            filter: grayscale(0) brightness(1) contrast(1);
+            opacity: 1;
+        }
+        @media (min-width: 768px) {
+            .logo-belt-item img {
+                height: 4rem;
+                max-width: min(18rem, 36vw);
+            }
+            .start-row img {
+                height: clamp(10rem, 18vw, 16rem);
+            }
+        }
+        @keyframes logoBelt {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-50%);
+            }
+        }
+        @keyframes spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg) scale(2);
+            }
+            to {
+                transform: translate(-50%, -50%) rotate(1turn) scale(2);
+            }
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface selection:bg-primary selection:text-surface">
+<!-- TopNavBar Implementation -->
+<nav class="fixed top-0 w-full z-50 bg-[#131313]/60 backdrop-blur-xl shadow-[0_0_48px_rgba(255,255,255,0.08)]">
+<div class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
+<div class="text-xl font-bold tracking-tighter text-white uppercase font-headline">rutgers.network</div>
+<div class="hidden md:flex items-center space-x-8 font-['Space_Grotesk'] tracking-tight text-sm font-medium">
+<a class="text-[#919191] hover:text-white transition-colors" href="#cohorts">Builders</a>
+<a class="text-[#919191] hover:text-white transition-colors" href="#vcs">VCs/Advisors</a>
+<a class="text-[#919191] hover:text-white transition-colors" href="#start">Start</a>
+</div>
+<div class="flex items-center space-x-6">
+<a class="bg-primary text-surface px-5 py-2 text-sm font-bold rounded-DEFAULT hover:bg-surface-tint transition-all duration-200 active:scale-95" href="apply.html" rel="noopener noreferrer" target="_blank">Apply</a>
+</div>
+</div>
+</nav>
+<main class="relative">
+<!-- Hero Section -->
+<section class="relative min-h-screen flex flex-col justify-center px-8 pt-20 overflow-hidden" id="hero">
+<div class="hero-gradient-bg">
+<div class="gradient-mask">
+<div class="spinning-gradient"></div>
+</div>
+</div>
+<div class="absolute inset-0 grid-bg pointer-events-none"></div>
+<div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-surface-bright/20 to-surface pointer-events-none"></div>
+<div class="max-w-7xl mx-auto w-full relative z-10 grid grid-cols-12 gap-8">
+<div class="col-span-12 md:col-span-8 lg:col-span-9">
+<div class="mb-4 text-xs font-label uppercase tracking-[0.2rem] text-outline">Phase 01</div>
+<h1 class="text-6xl md:text-8xl lg:text-[10rem] font-headline font-bold leading-[0.85] tracking-tighter text-white mb-12">
+                        rutgers.<br/>network
+                    </h1>
+<p class="text-xl md:text-2xl text-secondary max-w-2xl font-light leading-relaxed">
+                        The elite distributed laboratory for student founders, engineers, and builders. Rutgers has talent, it's just fragmented.
+                    </p>
+</div>
+<div class="col-span-12 md:col-span-4 lg:col-span-3 flex md:flex-col justify-end md:justify-center gap-6 border-t md:border-t-0 md:border-l border-outline-variant/15 pt-8 md:pt-0 md:pl-8">
+<div>
+<div class="text-[10px] font-label uppercase tracking-widest text-outline mb-1">Status</div>
+<div class="text-sm font-medium flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_white]"></span>
+                            Building
+                        </div>
+</div>
+<div>
+<div class="text-[10px] font-label uppercase tracking-widest text-outline mb-1">Network Access</div>
+<div class="text-sm font-medium">2026</div>
+</div>
+<div>
+<div class="text-[10px] font-label uppercase tracking-widest text-outline mb-1">Nodes</div>
+<div class="text-sm font-medium">2 Campuses</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Advisory Board -->
+<section class="py-24 px-8 bg-surface-container-low" id="advisory">
+<div class="max-w-7xl mx-auto">
+<div class="mb-16">
+<h2 class="text-xs font-label uppercase tracking-[0.2rem] text-outline mb-4">Advisory Council // Institutional Support</h2>
+<div class="h-px w-full bg-outline-variant/15"></div>
+</div>
+<div class="logo-belt-viewport">
+<div class="logo-belt-track">
+<div class="logo-belt-item group">
+<img alt="" class="transition-all duration-300" data-alt="Fiserv silver logo" src="assets/logos/fiserv.svg"/>
+</div>
+<div class="logo-belt-item group">
+<img alt="" class="transition-all duration-300" data-alt="MassMutual silver logo" src="assets/logos/massmutual.svg"/>
+</div>
+<div class="logo-belt-item group">
+<img alt="" class="transition-all duration-300" data-alt="Johnson and Johnson logo" src="assets/logos/jnj.svg"/>
+</div>
+<div class="logo-belt-item group">
+<img alt="" class="transition-all duration-300" data-alt="Verizon logo" src="assets/logos/verizon.svg"/>
+</div>
+<div class="logo-belt-item group">
+<img alt="" class="transition-all duration-300" data-alt="IBM logo" src="assets/logos/ibm.svg"/>
+</div>
+<div class="logo-belt-item group">
+<img alt="" class="transition-all duration-300" data-alt="Fiserv silver logo" src="assets/logos/fiserv.svg"/>
+</div>
+<div class="logo-belt-item group">
+<img alt="" class="transition-all duration-300" data-alt="MassMutual silver logo" src="assets/logos/massmutual.svg"/>
+</div>
+<div class="logo-belt-item group">
+<img alt="" class="transition-all duration-300" data-alt="Johnson and Johnson logo" src="assets/logos/jnj.svg"/>
+</div>
+<div class="logo-belt-item group">
+<img alt="" class="transition-all duration-300" data-alt="Verizon logo" src="assets/logos/verizon.svg"/>
+</div>
+<div class="logo-belt-item group">
+<img alt="" class="transition-all duration-300" data-alt="IBM logo" src="assets/logos/ibm.svg"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Cohorts Grid (Asymmetric Layout) -->
+<section class="py-32 px-8" id="cohorts">
+<div class="max-w-7xl mx-auto grid grid-cols-12 gap-10 gap-y-12 items-start">
+<div class="col-span-12 md:col-span-5 text-left">
+<h2 class="text-4xl font-headline font-bold text-white mb-6 tracking-tight">For builders.</h2>
+<p class="text-secondary leading-relaxed max-w-md">The network to find your co-founder, get in front of the right people, and ship something real.</p>
+</div>
+<div class="col-span-12 md:col-span-7 md:flex md:justify-end">
+<div class="w-full md:max-w-xl lg:max-w-2xl grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-surface-container p-10 flex flex-col justify-between aspect-square group hover:bg-surface-container-high transition-colors">
+<div class="text-4xl font-headline font-light text-outline/20 group-hover:text-primary/20 transition-colors">01</div>
+<div>
+<h4 class="text-lg font-headline font-bold mb-2">Member Directory</h4>
+<p class="text-xs text-outline uppercase tracking-widest">Know who's building what. Find co-founders, collaborators, and the right people.</p>
+</div>
+</div>
+<div class="bg-surface-container-high p-10 flex flex-col justify-between aspect-square group hover:bg-surface-container-highest transition-colors">
+<div class="text-4xl font-headline font-light text-outline/20 group-hover:text-primary/20 transition-colors">02</div>
+<div>
+<h4 class="text-lg font-headline font-bold mb-2">Warm Intros</h4>
+<p class="text-xs text-outline uppercase tracking-widest">Direct access to investors, operators, and alumni who back Rutgers talent.</p>
+</div>
+</div>
+<div class="bg-surface-container-highest p-10 flex flex-col justify-between aspect-square group hover:bg-primary transition-all duration-500">
+<div class="text-4xl font-headline font-light text-outline/20 group-hover:text-surface/20 transition-colors">03</div>
+<div>
+<h4 class="text-lg font-headline font-bold mb-2 group-hover:text-surface">Build Nights &amp; Pitch Nights</h4>
+<p class="text-xs text-outline group-hover:text-surface/80 uppercase tracking-widest">Ship together weekly. Share what you're working on.</p>
+</div>
+</div>
+<div class="bg-surface-container p-10 flex flex-col justify-between aspect-square group hover:bg-surface-container-high transition-colors">
+<div class="text-4xl font-headline font-light text-outline/20 group-hover:text-primary/20 transition-colors">04</div>
+<div>
+<h4 class="text-lg font-headline font-bold mb-2">Curated Cohorts</h4>
+<p class="text-xs text-outline uppercase tracking-widest">Two cohorts a year. High-signal only.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- For VCs -->
+<section class="py-32 px-8 bg-surface-container-low" id="vcs">
+<div class="max-w-7xl mx-auto grid grid-cols-12 gap-10 gap-y-12 items-start">
+<div class="col-span-12 md:col-span-7 md:flex md:justify-start">
+<div class="w-full md:max-w-xl lg:max-w-2xl grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-surface p-10 flex flex-col justify-between aspect-square group hover:bg-surface-container-high transition-colors border border-outline-variant/15">
+<div class="text-4xl font-headline font-light text-outline/20 group-hover:text-primary/20 transition-colors">01</div>
+<div>
+<h4 class="text-lg font-headline font-bold mb-2">Curated pipeline</h4>
+<p class="text-xs text-outline uppercase tracking-widest">Technical founders, operators, and researchers — already shipping, not just talking.</p>
+</div>
+</div>
+<div class="bg-surface-container-high p-10 flex flex-col justify-between aspect-square group hover:bg-surface-container-highest transition-colors border border-outline-variant/15">
+<div class="text-4xl font-headline font-light text-outline/20 group-hover:text-primary/20 transition-colors">02</div>
+<div>
+<h4 class="text-lg font-headline font-bold mb-2">Warm intros</h4>
+<p class="text-xs text-outline uppercase tracking-widest">Cleaner paths to the right people—less cold outbound, more aligned conversations.</p>
+</div>
+</div>
+<div class="bg-surface-container-highest p-10 flex flex-col justify-between aspect-square group hover:bg-primary transition-all duration-500 border border-outline-variant/15">
+<div class="text-4xl font-headline font-light text-outline/20 group-hover:text-surface/20 transition-colors">03</div>
+<div>
+<h4 class="text-lg font-headline font-bold mb-2 group-hover:text-surface">Build &amp; pitch cadence</h4>
+<p class="text-xs text-outline group-hover:text-surface/80 uppercase tracking-widest">See founders shipping in real time. Diligence faster, decide earlier.</p>
+</div>
+</div>
+<div class="bg-surface p-10 flex flex-col justify-between aspect-square group hover:bg-surface-container-high transition-colors border border-outline-variant/15">
+<div class="text-4xl font-headline font-light text-outline/20 group-hover:text-primary/20 transition-colors">04</div>
+<div>
+<h4 class="text-lg font-headline font-bold mb-2">Rutgers lens</h4>
+<p class="text-xs text-outline uppercase tracking-widest">Early access to Rutgers-connected deals before they hit the broader market.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="col-span-12 md:col-span-5 text-left md:text-right md:justify-self-end">
+<div class="max-w-md md:ml-auto">
+<div class="text-xs font-label uppercase tracking-[0.2rem] text-outline mb-4">For partners</div>
+<h2 class="text-4xl font-headline font-bold text-white mb-6 tracking-tight">For VCs, advisors &amp; speakers.</h2>
+<p class="text-secondary leading-relaxed mb-8">Access to a curated scarlet pipeline. Whether you're sourcing, advising, or sharing what you know — this is where the serious builders are.</p>
+<p class="text-sm text-outline mb-2">Get in touch</p>
+<p><a class="text-lg font-headline font-semibold text-white hover:text-[#ff4d6d] transition-colors" href="mailto:ryan@rutgers.network">ryan@rutgers.network</a></p>
+</div>
+</div>
+</div>
+</section>
+<!-- Start Here Row -->
+<section class="bg-surface-container-low/40">
+<div class="start-row">
+<img alt="Gray image 1" src="GRAY/GettyImages-664857956-8eca2a8d3d55478598c75106533aa79a.jpg"/>
+<img alt="Gray image 2" src="GRAY/c32324ac-11e5-11eb-88e1-abf0a3fa7ebf_image_hires_111455.webp"/>
+<img alt="Gray image 3" src="GRAY/early-amazon-photo-screengrab-750x440.jpeg"/>
+<img alt="Gray image 4" src="GRAY/Screen-Shot-2011-08-25-at-16.01.34.png"/>
+<img alt="Gray image 5" src="GRAY/6431feb28e9cf521116262a9_loopt.webp"/>
+<img alt="Gray image 6" src="GRAY/654095f9356802a56be82064.webp"/>
+</div>
+</section>
+<!-- Apply CTA -->
+<section class="py-20 px-8 relative overflow-hidden" id="start">
+<div class="absolute inset-0 grid-bg opacity-10 pointer-events-none"></div>
+<div class="max-w-7xl mx-auto relative z-10 bg-surface border border-outline-variant/20 p-12 md:p-16">
+<div class="text-xs font-label uppercase tracking-[0.2rem] text-primary mb-6">Individual // Builder</div>
+<h2 class="text-4xl md:text-5xl font-headline font-bold text-white mb-6 tracking-tighter leading-none">Join Rutgers.Network.</h2>
+<p class="text-secondary text-lg mb-10 max-w-xl leading-relaxed">Only two cohorts a year. Applications close April 30th. </p>
+<a class="inline-flex items-center gap-4 text-white hover:translate-x-1 transition-transform font-headline font-bold text-xl uppercase tracking-tighter" href="apply.html" rel="noopener noreferrer" target="_blank">
+<span>Open application</span>
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</section>
+<!-- Start Your Own Network -->
+<section class="py-20 px-8 relative overflow-hidden bg-surface-container-lowest/40">
+<div class="absolute inset-0 grid-bg opacity-10 pointer-events-none"></div>
+<div class="max-w-7xl mx-auto relative z-10 bg-surface-container-lowest border border-outline-variant/20 p-12 md:p-16">
+<div class="grid grid-cols-12 gap-10 items-start">
+<div class="col-span-12 md:col-span-7">
+
+<h2 class="text-4xl md:text-5xl font-headline font-bold text-white mb-6 tracking-tighter leading-none">Build your local network.</h2>
+<p class="text-secondary text-lg mb-10 max-w-xl leading-relaxed">
+We were inspired and work with the UCSB network — <a class="text-white underline decoration-outline-variant/40 hover:decoration-white transition-colors" href="https://www.ucsb.network/" target="_blank" rel="noopener noreferrer">https://www.ucsb.network/</a>
+</p>
+<p class="text-sm text-outline mb-2">If you’re interested in starting a chapter on your campus, contact</p>
+<p><a class="text-lg font-headline font-semibold text-white hover:text-[#ff4d6d] transition-colors" href="mailto:ryan@rutgers.network">ryan@rutgers.network</a></p>
+</div>
+<div class="col-span-12 md:col-span-5">
+<div class="bg-surface-container-lowest/30 border border-outline-variant/20 rounded-DEFAULT p-6 md:p-8">
+<div class="text-xs font-label uppercase tracking-[0.2rem] text-outline mb-3">What you get</div>
+<div class="text-on-surface text-sm leading-relaxed text-secondary">
+Operations guidance, partnerships, event templates, and the same high-signal application flow.
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Implementation -->
+<footer class="bg-[#131313] w-full border-t border-[#474747]/15">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 py-20 w-full max-w-7xl mx-auto">
+<div class="mb-12 md:mb-0 text-center md:text-left">
+<div class="text-lg font-bold text-white mb-2 font-headline uppercase">RUTGERS.NETWORK</div>
+<div class="font-['Inter'] text-[10px] uppercase tracking-[0.1rem] leading-relaxed text-[#c6c6cb]">© 2026 RUTGERS.NETWORK // THE SCARLET NETWORK</div>
+</div>
+<div class="flex flex-wrap justify-center gap-10 font-['Inter'] text-[10px] uppercase tracking-[0.1rem]">
+<a class="text-[#919191] hover:text-white transition-colors opacity-80 hover:opacity-100" href="https://www.linkedin.com/company/rutgers-network/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+</div>
+</div>
+</footer>
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+</body></html>
