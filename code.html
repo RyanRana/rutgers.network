@@ -153,7 +153,7 @@
         }
         .start-row {
             display: grid;
-            grid-template-columns: repeat(6, minmax(0, 1fr));
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 0;
             width: 100%;
         }
@@ -174,6 +174,9 @@
             .logo-belt-item img {
                 height: 4rem;
                 max-width: min(18rem, 36vw);
+            }
+            .start-row {
+                grid-template-columns: repeat(6, minmax(0, 1fr));
             }
             .start-row img {
                 height: clamp(10rem, 18vw, 16rem);
@@ -200,21 +203,21 @@
 <body class="bg-surface font-body text-on-surface selection:bg-primary selection:text-surface">
 <!-- TopNavBar Implementation -->
 <nav class="fixed top-0 w-full z-50 bg-[#131313]/60 backdrop-blur-xl shadow-[0_0_48px_rgba(255,255,255,0.08)]">
-<div class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
+<div class="flex justify-between items-center px-5 sm:px-6 md:px-8 py-3 md:py-4 max-w-7xl mx-auto">
 <div class="text-xl font-bold tracking-tighter text-white uppercase font-headline">rutgers.network</div>
 <div class="hidden md:flex items-center space-x-8 font-['Space_Grotesk'] tracking-tight text-sm font-medium">
 <a class="text-[#919191] hover:text-white transition-colors" href="#cohorts">Builders</a>
 <a class="text-[#919191] hover:text-white transition-colors" href="#vcs">VCs/Advisors</a>
 <a class="text-[#919191] hover:text-white transition-colors" href="#start">Start</a>
 </div>
-<div class="flex items-center space-x-6">
-<a class="bg-primary text-surface px-5 py-2 text-sm font-bold rounded-DEFAULT hover:bg-surface-tint transition-all duration-200 active:scale-95" href="apply.html" rel="noopener noreferrer" target="_blank">Apply</a>
+<div class="flex items-center space-x-3 sm:space-x-6">
+<a class="bg-primary text-surface px-4 md:px-5 py-2 text-xs md:text-sm font-bold rounded-DEFAULT hover:bg-surface-tint transition-all duration-200 active:scale-95" href="apply.html" rel="noopener noreferrer" target="_blank">Apply</a>
 </div>
 </div>
 </nav>
 <main class="relative">
 <!-- Hero Section -->
-<section class="relative min-h-screen flex flex-col justify-center px-8 pt-20 overflow-hidden" id="hero">
+<section class="relative min-h-screen flex flex-col justify-center px-5 sm:px-6 md:px-8 pt-24 md:pt-20 overflow-hidden" id="hero">
 <div class="hero-gradient-bg">
 <div class="gradient-mask">
 <div class="spinning-gradient"></div>
@@ -222,17 +225,17 @@
 </div>
 <div class="absolute inset-0 grid-bg pointer-events-none"></div>
 <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-surface-bright/20 to-surface pointer-events-none"></div>
-<div class="max-w-7xl mx-auto w-full relative z-10 grid grid-cols-12 gap-8">
+<div class="max-w-7xl mx-auto w-full relative z-10 grid grid-cols-12 gap-6 md:gap-8">
 <div class="col-span-12 md:col-span-8 lg:col-span-9">
 <div class="mb-4 text-xs font-label uppercase tracking-[0.2rem] text-outline">Phase 01</div>
-<h1 class="text-6xl md:text-8xl lg:text-[10rem] font-headline font-bold leading-[0.85] tracking-tighter text-white mb-12">
+<h1 class="text-[2.8rem] sm:text-6xl md:text-8xl lg:text-[10rem] font-headline font-bold leading-[0.85] tracking-tighter text-white mb-8 md:mb-12">
                         rutgers.<br/>network
                     </h1>
-<p class="text-xl md:text-2xl text-secondary max-w-2xl font-light leading-relaxed">
+<p class="text-base sm:text-lg md:text-2xl text-secondary max-w-2xl font-light leading-relaxed">
                         The elite distributed laboratory for student founders, engineers, and builders. Rutgers has talent, it's just fragmented.
                     </p>
 </div>
-<div class="col-span-12 md:col-span-4 lg:col-span-3 flex md:flex-col justify-end md:justify-center gap-6 border-t md:border-t-0 md:border-l border-outline-variant/15 pt-8 md:pt-0 md:pl-8">
+<div class="col-span-12 md:col-span-4 lg:col-span-3 flex flex-wrap md:flex-col justify-start md:justify-center gap-5 md:gap-6 border-t md:border-t-0 md:border-l border-outline-variant/15 pt-6 md:pt-0 md:pl-8">
 <div>
 <div class="text-[10px] font-label uppercase tracking-widest text-outline mb-1">Status</div>
 <div class="text-sm font-medium flex items-center gap-2">
@@ -252,9 +255,9 @@
 </div>
 </section>
 <!-- Advisory Board -->
-<section class="py-24 px-8 bg-surface-container-low" id="advisory">
+<section class="py-16 md:py-24 px-5 sm:px-6 md:px-8 bg-surface-container-low" id="advisory">
 <div class="max-w-7xl mx-auto">
-<div class="mb-16">
+<div class="mb-10 md:mb-16">
 <h2 class="text-xs font-label uppercase tracking-[0.2rem] text-outline mb-4">Advisory Council // Institutional Support</h2>
 <div class="h-px w-full bg-outline-variant/15"></div>
 </div>
@@ -295,36 +298,36 @@
 </div>
 </section>
 <!-- Cohorts Grid (Asymmetric Layout) -->
-<section class="py-32 px-8" id="cohorts">
-<div class="max-w-7xl mx-auto grid grid-cols-12 gap-10 gap-y-12 items-start">
+<section class="py-20 md:py-32 px-5 sm:px-6 md:px-8" id="cohorts">
+<div class="max-w-7xl mx-auto grid grid-cols-12 gap-6 md:gap-10 gap-y-10 md:gap-y-12 items-start">
 <div class="col-span-12 md:col-span-5 text-left">
-<h2 class="text-4xl font-headline font-bold text-white mb-6 tracking-tight">For builders.</h2>
+<h2 class="text-3xl md:text-4xl font-headline font-bold text-white mb-4 md:mb-6 tracking-tight">For builders.</h2>
 <p class="text-secondary leading-relaxed max-w-md">The network to find your co-founder, get in front of the right people, and ship something real.</p>
 </div>
 <div class="col-span-12 md:col-span-7 md:flex md:justify-end">
 <div class="w-full md:max-w-xl lg:max-w-2xl grid grid-cols-1 md:grid-cols-2 gap-4">
-<div class="bg-surface-container p-10 flex flex-col justify-between aspect-square group hover:bg-surface-container-high transition-colors">
+<div class="bg-surface-container p-6 sm:p-8 md:p-10 flex flex-col justify-between min-h-[15rem] md:aspect-square group hover:bg-surface-container-high transition-colors">
 <div class="text-4xl font-headline font-light text-outline/20 group-hover:text-primary/20 transition-colors">01</div>
 <div>
 <h4 class="text-lg font-headline font-bold mb-2">Member Directory</h4>
 <p class="text-xs text-outline uppercase tracking-widest">Know who's building what. Find co-founders, collaborators, and the right people.</p>
 </div>
 </div>
-<div class="bg-surface-container-high p-10 flex flex-col justify-between aspect-square group hover:bg-surface-container-highest transition-colors">
+<div class="bg-surface-container-high p-6 sm:p-8 md:p-10 flex flex-col justify-between min-h-[15rem] md:aspect-square group hover:bg-surface-container-highest transition-colors">
 <div class="text-4xl font-headline font-light text-outline/20 group-hover:text-primary/20 transition-colors">02</div>
 <div>
 <h4 class="text-lg font-headline font-bold mb-2">Warm Intros</h4>
 <p class="text-xs text-outline uppercase tracking-widest">Direct access to investors, operators, and alumni who back Rutgers talent.</p>
 </div>
 </div>
-<div class="bg-surface-container-highest p-10 flex flex-col justify-between aspect-square group hover:bg-primary transition-all duration-500">
+<div class="bg-surface-container-highest p-6 sm:p-8 md:p-10 flex flex-col justify-between min-h-[15rem] md:aspect-square group hover:bg-primary transition-all duration-500">
 <div class="text-4xl font-headline font-light text-outline/20 group-hover:text-surface/20 transition-colors">03</div>
 <div>
 <h4 class="text-lg font-headline font-bold mb-2 group-hover:text-surface">Build Nights &amp; Pitch Nights</h4>
 <p class="text-xs text-outline group-hover:text-surface/80 uppercase tracking-widest">Ship together weekly. Share what you're working on.</p>
 </div>
 </div>
-<div class="bg-surface-container p-10 flex flex-col justify-between aspect-square group hover:bg-surface-container-high transition-colors">
+<div class="bg-surface-container p-6 sm:p-8 md:p-10 flex flex-col justify-between min-h-[15rem] md:aspect-square group hover:bg-surface-container-high transition-colors">
 <div class="text-4xl font-headline font-light text-outline/20 group-hover:text-primary/20 transition-colors">04</div>
 <div>
 <h4 class="text-lg font-headline font-bold mb-2">Curated Cohorts</h4>
@@ -336,32 +339,32 @@
 </div>
 </section>
 <!-- For VCs -->
-<section class="py-32 px-8 bg-surface-container-low" id="vcs">
-<div class="max-w-7xl mx-auto grid grid-cols-12 gap-10 gap-y-12 items-start">
+<section class="py-20 md:py-32 px-5 sm:px-6 md:px-8 bg-surface-container-low" id="vcs">
+<div class="max-w-7xl mx-auto grid grid-cols-12 gap-6 md:gap-10 gap-y-10 md:gap-y-12 items-start">
 <div class="col-span-12 md:col-span-7 md:flex md:justify-start">
 <div class="w-full md:max-w-xl lg:max-w-2xl grid grid-cols-1 md:grid-cols-2 gap-4">
-<div class="bg-surface p-10 flex flex-col justify-between aspect-square group hover:bg-surface-container-high transition-colors border border-outline-variant/15">
+<div class="bg-surface p-6 sm:p-8 md:p-10 flex flex-col justify-between min-h-[15rem] md:aspect-square group hover:bg-surface-container-high transition-colors border border-outline-variant/15">
 <div class="text-4xl font-headline font-light text-outline/20 group-hover:text-primary/20 transition-colors">01</div>
 <div>
 <h4 class="text-lg font-headline font-bold mb-2">Curated pipeline</h4>
 <p class="text-xs text-outline uppercase tracking-widest">Technical founders, operators, and researchers — already shipping, not just talking.</p>
 </div>
 </div>
-<div class="bg-surface-container-high p-10 flex flex-col justify-between aspect-square group hover:bg-surface-container-highest transition-colors border border-outline-variant/15">
+<div class="bg-surface-container-high p-6 sm:p-8 md:p-10 flex flex-col justify-between min-h-[15rem] md:aspect-square group hover:bg-surface-container-highest transition-colors border border-outline-variant/15">
 <div class="text-4xl font-headline font-light text-outline/20 group-hover:text-primary/20 transition-colors">02</div>
 <div>
 <h4 class="text-lg font-headline font-bold mb-2">Warm intros</h4>
 <p class="text-xs text-outline uppercase tracking-widest">Cleaner paths to the right people—less cold outbound, more aligned conversations.</p>
 </div>
 </div>
-<div class="bg-surface-container-highest p-10 flex flex-col justify-between aspect-square group hover:bg-primary transition-all duration-500 border border-outline-variant/15">
+<div class="bg-surface-container-highest p-6 sm:p-8 md:p-10 flex flex-col justify-between min-h-[15rem] md:aspect-square group hover:bg-primary transition-all duration-500 border border-outline-variant/15">
 <div class="text-4xl font-headline font-light text-outline/20 group-hover:text-surface/20 transition-colors">03</div>
 <div>
 <h4 class="text-lg font-headline font-bold mb-2 group-hover:text-surface">Build &amp; pitch cadence</h4>
 <p class="text-xs text-outline group-hover:text-surface/80 uppercase tracking-widest">See founders shipping in real time. Diligence faster, decide earlier.</p>
 </div>
 </div>
-<div class="bg-surface p-10 flex flex-col justify-between aspect-square group hover:bg-surface-container-high transition-colors border border-outline-variant/15">
+<div class="bg-surface p-6 sm:p-8 md:p-10 flex flex-col justify-between min-h-[15rem] md:aspect-square group hover:bg-surface-container-high transition-colors border border-outline-variant/15">
 <div class="text-4xl font-headline font-light text-outline/20 group-hover:text-primary/20 transition-colors">04</div>
 <div>
 <h4 class="text-lg font-headline font-bold mb-2">Rutgers lens</h4>
@@ -373,7 +376,7 @@
 <div class="col-span-12 md:col-span-5 text-left md:text-right md:justify-self-end">
 <div class="max-w-md md:ml-auto">
 <div class="text-xs font-label uppercase tracking-[0.2rem] text-outline mb-4">For partners</div>
-<h2 class="text-4xl font-headline font-bold text-white mb-6 tracking-tight">For VCs, advisors &amp; speakers.</h2>
+<h2 class="text-3xl md:text-4xl font-headline font-bold text-white mb-4 md:mb-6 tracking-tight">For VCs, advisors &amp; speakers.</h2>
 <p class="text-secondary leading-relaxed mb-8">Access to a curated scarlet pipeline. Whether you're sourcing, advising, or sharing what you know — this is where the serious builders are.</p>
 <p class="text-sm text-outline mb-2">Get in touch</p>
 <p><a class="text-lg font-headline font-semibold text-white hover:text-[#ff4d6d] transition-colors" href="mailto:ryan@rutgers.network">ryan@rutgers.network</a></p>
@@ -383,7 +386,7 @@
 </section>
 <!-- Start Here Row -->
 <section class="bg-surface-container-low/40">
-<div class="start-row">
+<div class="start-row grid-cols-2 md:grid-cols-6">
 <img alt="Gray image 1" src="GRAY/GettyImages-664857956-8eca2a8d3d55478598c75106533aa79a.jpg"/>
 <img alt="Gray image 2" src="GRAY/c32324ac-11e5-11eb-88e1-abf0a3fa7ebf_image_hires_111455.webp"/>
 <img alt="Gray image 3" src="GRAY/early-amazon-photo-screengrab-750x440.jpeg"/>
@@ -393,27 +396,27 @@
 </div>
 </section>
 <!-- Apply CTA -->
-<section class="py-20 px-8 relative overflow-hidden" id="start">
+<section class="py-16 md:py-20 px-5 sm:px-6 md:px-8 relative overflow-hidden" id="start">
 <div class="absolute inset-0 grid-bg opacity-10 pointer-events-none"></div>
-<div class="max-w-7xl mx-auto relative z-10 bg-surface border border-outline-variant/20 p-12 md:p-16">
+<div class="max-w-7xl mx-auto relative z-10 bg-surface border border-outline-variant/20 p-6 sm:p-8 md:p-16">
 <div class="text-xs font-label uppercase tracking-[0.2rem] text-primary mb-6">Individual // Builder</div>
-<h2 class="text-4xl md:text-5xl font-headline font-bold text-white mb-6 tracking-tighter leading-none">Join Rutgers.Network.</h2>
-<p class="text-secondary text-lg mb-10 max-w-xl leading-relaxed">Only two cohorts a year. Applications close April 30th. </p>
-<a class="inline-flex items-center gap-4 text-white hover:translate-x-1 transition-transform font-headline font-bold text-xl uppercase tracking-tighter" href="apply.html" rel="noopener noreferrer" target="_blank">
+<h2 class="text-3xl md:text-5xl font-headline font-bold text-white mb-4 md:mb-6 tracking-tighter leading-none">Join Rutgers.Network.</h2>
+<p class="text-secondary text-base md:text-lg mb-8 md:mb-10 max-w-xl leading-relaxed">Only two cohorts a year. Applications close April 30th. </p>
+<a class="inline-flex items-center gap-3 md:gap-4 text-white hover:translate-x-1 transition-transform font-headline font-bold text-lg md:text-xl uppercase tracking-tighter" href="apply.html" rel="noopener noreferrer" target="_blank">
 <span>Open application</span>
 <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
 </a>
 </div>
 </section>
 <!-- Start Your Own Network -->
-<section class="py-20 px-8 relative overflow-hidden bg-surface-container-lowest/40">
+<section class="py-16 md:py-20 px-5 sm:px-6 md:px-8 relative overflow-hidden bg-surface-container-lowest/40">
 <div class="absolute inset-0 grid-bg opacity-10 pointer-events-none"></div>
-<div class="max-w-7xl mx-auto relative z-10 bg-surface-container-lowest border border-outline-variant/20 p-12 md:p-16">
+<div class="max-w-7xl mx-auto relative z-10 bg-surface-container-lowest border border-outline-variant/20 p-6 sm:p-8 md:p-16">
 <div class="grid grid-cols-12 gap-10 items-start">
 <div class="col-span-12 md:col-span-7">
 
-<h2 class="text-4xl md:text-5xl font-headline font-bold text-white mb-6 tracking-tighter leading-none">Build your local network.</h2>
-<p class="text-secondary text-lg mb-10 max-w-xl leading-relaxed">
+<h2 class="text-3xl md:text-5xl font-headline font-bold text-white mb-4 md:mb-6 tracking-tighter leading-none">Build your local network.</h2>
+<p class="text-secondary text-base md:text-lg mb-8 md:mb-10 max-w-xl leading-relaxed">
 We were inspired and work with the UCSB network — <a class="text-white underline decoration-outline-variant/40 hover:decoration-white transition-colors" href="https://www.ucsb.network/" target="_blank" rel="noopener noreferrer">https://www.ucsb.network/</a>
 </p>
 <p class="text-sm text-outline mb-2">If you’re interested in starting a chapter on your campus, contact</p>
@@ -433,12 +436,12 @@ Operations guidance, partnerships, event templates, and the same high-signal app
 </main>
 <!-- Footer Implementation -->
 <footer class="bg-[#131313] w-full border-t border-[#474747]/15">
-<div class="flex flex-col md:flex-row justify-between items-center px-12 py-20 w-full max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-center px-5 sm:px-6 md:px-12 py-12 md:py-20 w-full max-w-7xl mx-auto">
 <div class="mb-12 md:mb-0 text-center md:text-left">
 <div class="text-lg font-bold text-white mb-2 font-headline uppercase">RUTGERS.NETWORK</div>
 <div class="font-['Inter'] text-[10px] uppercase tracking-[0.1rem] leading-relaxed text-[#c6c6cb]">© 2026 RUTGERS.NETWORK // THE SCARLET NETWORK</div>
 </div>
-<div class="flex flex-wrap justify-center gap-10 font-['Inter'] text-[10px] uppercase tracking-[0.1rem]">
+<div class="flex flex-wrap justify-center gap-6 md:gap-10 font-['Inter'] text-[10px] uppercase tracking-[0.1rem]">
 <a class="text-[#919191] hover:text-white transition-colors opacity-80 hover:opacity-100" href="https://www.linkedin.com/company/rutgers-network/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
 </div>
 </div>
